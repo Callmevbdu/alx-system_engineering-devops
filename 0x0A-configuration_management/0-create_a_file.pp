@@ -1,5 +1,4 @@
-# File: 0-create_a_file.pp
-# Puppet manifest to create a file in /tmp
+# Puppet manifest to create a file in /tmp with specific permissions and content
 
 file { '/tmp/school':
   ensure  => file,
@@ -8,4 +7,3 @@ file { '/tmp/school':
   group   => 'www-data',
   content => 'I love Puppet',
 }
-
