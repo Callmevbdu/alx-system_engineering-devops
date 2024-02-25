@@ -1,3 +1,6 @@
+# make changes to the default ssh config file
+# connect to a server without typing a password
+
 include stdlib
 
 file_line { 'SSH Private Key':
@@ -15,3 +18,4 @@ file_line { 'Deny Password Auth':
   replace            => true,
   append_on_no_match => true
 }
+
