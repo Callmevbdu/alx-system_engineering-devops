@@ -1,8 +1,5 @@
 file { '/home/callmevbdu/.ssh/config':
   ensure  => present,
-  mode    => '0600',
-  owner   => 'callmevbdu',
-  group   => 'callmevbdu',
   content => "\
 Host 34.239.107.230
   HostName 34.239.107.230
