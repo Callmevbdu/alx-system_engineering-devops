@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
 
-if [[ $# -lt 4 ]]; then
+# Check if the number of parameters is less than 4
+if [ "$#" -lt 4 ]; then
     echo "Usage: $(basename "$0") PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
     exit 1
 fi
 
-SOURCE="$1"
+# Assign parameters to variables
+FILE_PATH="$1"
 SERVER_IP="$2"
 USERNAME="$3"
-PRIVATE_KEY="$4"
+SSH_KEY="$4"
 
-SCP_CMD="scp -i ${PRIVATE_KEY} -o 'StrictHostKeyChecking no' '$SOURCE' ${USERNAME}@${SERVER_IP}:~/"
-echo "${SCP_CMD}"
-eval "${SCP_CMD}"
+# Transfer the file using SCP with strict host key checking disabled
+scp -i "$SSH_KEY" -o StrictHostKeyChecking=no "$FILE_PATH" "${USERNAME}@${SERVER_IP}:~/"
 
 exit 0
 
