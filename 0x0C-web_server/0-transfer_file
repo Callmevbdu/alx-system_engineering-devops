@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+if [[ $# -lt 4 ]]; then
+    echo "Usage: $(basename "$0") PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
+    exit 1
+fi
+
+SOURCE="$1"
+SERVER_IP="$2"
+USERNAME="$3"
+PRIVATE_KEY="$4"
+
+SCP_CMD="scp -i ${PRIVATE_KEY} -o 'StrictHostKeyChecking no' '$SOURCE' ${USERNAME}@${SERVER_IP}:~/"
+echo "${SCP_CMD}"
+eval "${SCP_CMD}"
+
+exit 0
+
