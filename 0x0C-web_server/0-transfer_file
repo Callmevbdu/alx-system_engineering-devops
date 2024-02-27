@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
 
-# Transfer the file using SCP with strict host key checking disabled
-scp -i "$SSH_KEY" -o StrictHostKeyChecking=no "$FILE_PATH" "${USERNAME}@${SERVER_IP}:~/"
+if [[ ${#} -lt 4 ]]; then
+  echo "Usage: $0 PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
+  exit 1
+fi
+
+SOURCE="$1"
+SERVER="$2"
+USER="$3"
+PRIVATE_KEY="${4:-~/.ssh/id_rsa}"
+DESTINATION="~/${Basename "${SOURCE}"}"
+
+set -ex
+scp -i "${PRIVATE_KEY}" -o StrictHostKeyChecking=no "${SOURCE}" "${USER}@${SERVER}:${DESTINATION}"
+echo "File '$SOURCE' transferred to '$DESTINATION'."
 
