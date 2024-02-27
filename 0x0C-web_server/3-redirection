@@ -2,11 +2,11 @@
 # Bash script containing commands to automatically configure a Ubuntu machine
 # to respect above requirements.
 
-echo -e "Updating and installing Nginx.\n"
-sudo apt-get update -y -qq && \
-         sudo apt-get install nginx -y
+echo -e "Installing Nginx.\n"
+sudo apt-get update -y -qq
+sudo apt-get install nginx -y
 
-echo -e "\nPerforming additional setup.\n"
+echo -e "\nNginx Setup.\n"
 
 # Start Nginx service
 sudo service nginx start
@@ -14,18 +14,18 @@ sudo service nginx start
 # Allow Nginx through the firewall
 sudo ufw allow 'Nginx HTTP'
 
-# Grant user ownership of website files for easy editing
+# Grant user ownership of website files
 sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www
 
 # Backup default index file
 cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
 
-# Create a new index file with 'Hello World!'
+# Create a new file with 'Hello World!'
 echo -e "Hello World!" > /var/www/html/index.nginx-debian.html
 
-# Configure redirection from /redirect_me to a YouTube video
-sudo sed -i '24i\       rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+# Configure redirection from /redirect_me to a 404 picture
+sudo sed -i '24i\       rewrite ^/redirect_me  https://miro.medium.com/v2/resize:fit:800/1*hFwwQAW45673VGKrMPE2qQ.png permanent;' /etc/nginx/sites-available/default
 
 # Restart Nginx service
 sudo service nginx restart
