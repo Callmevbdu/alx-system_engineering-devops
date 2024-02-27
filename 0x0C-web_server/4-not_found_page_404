@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Configure your Nginx server to have a custom 404 page that contains the
-# string "Ceci n'est pas une page".
+# Bash script containing commands to automatically configure a Ubuntu machine
+# to respect above requirements.
 
 echo -e "Installing Nginx.\n"
 sudo apt-get update -y -qq
@@ -27,7 +27,7 @@ echo -e "Hello World!" > /var/www/html/index.nginx-debian.html
 # Configure redirection from /redirect_me to a 404 picture
 sudo sed -i '24i\       rewrite ^/redirect_me  https://miro.medium.com/v2/resize:fit:800/1*hFwwQAW45673VGKrMPE2qQ.png permanent;' /etc/nginx/sites-available/default
 
-# Setup a 404 page
+# 404 page
 echo "Ceci n'est pas une page" >> /var/www/html/error_404.html
 sudo sed -i '25i\	error_page 404 /error_404.html;' /etc/nginx/sites-available/default
 
