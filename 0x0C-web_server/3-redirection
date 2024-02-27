@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+# Install Nginx and serve a 'Hello World' page
+echo -e "Updating and installing Nginx.\n"
+sudo apt-get update -y -qq && \
+         sudo apt-get install nginx -y
+
+echo -e "\nSetting up some minor stuff.\n"
+
+# Starting Nginx service
+sudo service nginx start
+
+# Allowing Nginx on firewall
+sudo ufw allow 'Nginx HTTP'
+
+# Giving user ownership to website files for easy editing
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+
+# Backup default index
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+
+# Creating new index
+echo -e "Hello World!" > /var/www/html/index.nginx-debian.html
+
+# Adding redirection logic
+cat << EOF >> "/etc/nginx/sites-available/my_site.conf"
+server {
+    listen 80;
+    server_name _; # Replace "_" with your domain name
+
+    location = /redirect_me {
+        rewrite ^/redirect_me(/.*) https://www.youtube.com/watch?v=QH2-TGUlwu4$1 permanent;
+    }
+
+    location / {
+        # Your remaining configuration...
+    }
+}
+EOF
+
+# Enabling and reloading Nginx
+sudo ln -s "/etc/nginx/sites-available/my_site.conf" "/etc/nginx/sites-enabled/"
+sudo systemctl reload nginx
+
+echo -e "\nConfiguration complete.\n"
