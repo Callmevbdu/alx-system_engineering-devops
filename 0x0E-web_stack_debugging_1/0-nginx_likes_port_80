@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-# Update / Install and start Nginx 
-sudo apt-get update --fix-missing
-sudo apt-get install nginx
-service nginx start
-
 # Remove Nginx config file
 rm /etc/nginx/sites-enabled/default
 
