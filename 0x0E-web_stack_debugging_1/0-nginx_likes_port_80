@@ -5,51 +5,11 @@ sudo apt-get update --fix-missing
 sudo apt-get install nginx
 service nginx start
 
-# Identify the init system
-init_system=$(ps -p 1 | awk '{print $NF}')
+# Remove Nginx config file
+rm /etc/nginx/sites-enabled/default
 
-# Choose the appropriate command based on the init system
-if [[ "$init_system" == "systemd" ]]; then
-  check_nginx_status="systemctl status nginx"
-  reload_nginx="systemctl reload nginx"
-else
-  check_nginx_status="service nginx status"
-  reload_nginx="service nginx reload"
-fi
+# Config port 80
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
-# Check if Nginx is running
-if ! $check_nginx_status &> /dev/null; then
-  echo "Error: Nginx is not running. Please start it before running this script."
-  exit 1
-fi
-
-# Check if Nginx is listening on port 80 on all IPv4 addresses
-available_ips=$(ss -tlpn | grep ":80" | awk '{print $NF}' | grep -vE "^127\.")
-
-# Explain the purpose of checking available IPs
-if [[ -z "$available_ips" ]]; then
-  echo "Nginx is not listening on port 80 on any IPv4 addresses. Fixing..."
-  exit 1
-fi
-
-# Explain the purpose of checking for already listening on all IPs
-if [[ "$available_ips" == "0.0.0.0" ]]; then
-  echo "Nginx is already listening on port 80 on all IPv4 addresses."
-  exit 0
-fi
-
-# Explain the purpose of the fix
-echo "Updating Nginx configuration to listen on all available IPs..."
-sed -i 's/listen 80;/listen 80 default_server;/g' /etc/nginx/nginx.conf
-
-# Explain the purpose of reloading the configuration
-$reload_nginx
-
-# Explain the purpose of the final check
-available_ips=$(ss -tlpn | grep ":80" | awk '{print $NF}' | grep -vE "^127\.")
-if [[ -z "$available_ips" ]]; then
-  echo "Error: Failed to fix Nginx configuration."
-  exit 1
-fi
-
-echo "Nginx is now listening on port 80 on all IPv4 addresses: $available_ips"
+# Restart Nginx
+service nginx restart
