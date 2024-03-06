@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Using what I did for task #0, making my fix short and sweet.
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service nginx start
+kill "$(pgrep 'nginx' | head -1)”
+
