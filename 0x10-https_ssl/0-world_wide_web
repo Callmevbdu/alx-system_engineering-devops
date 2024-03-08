@@ -2,16 +2,15 @@
 # Print domain and subdomain info
 
 print_info() {
-  local domain="$1"
-  local subdomain="$2"
-  local full_domain="${subdomain}.$domain"
-  local record=$(dig +short A "@$full_domain")
+	local domain="$1"
+	local subdomain="$2"
+	local full_domain="${subdomain}.$domain"
+	local record=$(dig +short A "@$full_domain")
 
-  if [[ -z "$record" ]]; then
-    record="N/A"
-  fi
-
-  echo "The subdomain $subdomain is a A record and points to $record"
+	if [[ -z "$record" ]]; then
+		record="N/A"
+	fi
+	echo "The subdomain $subdomain is a A record and points to $record"
 }
 
 if [[ -z "$1" ]]; then
