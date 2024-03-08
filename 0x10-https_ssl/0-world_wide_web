@@ -14,15 +14,15 @@ print_info() {
 }
 
 if [[ -z "$1" ]]; then
-  echo "Error: Please provide a domain name."
-  exit 1
+	echo "Error: Please provide a domain name."
+	exit 1
 fi
 
 if [[ -z "$2" ]]; then
-  print_info "$1" "www"
-  print_info "$1" "lb-01"
-  print_info "$1" "web-01"
-  print_info "$1" "web-02"
+	print_info "$1" "www"
+	print_info "$1" "lb-01"
+	print_info "$1" "web-01"
+	print_info "$1" "web-02"
 else
-  print_info "$1" "$2"
+	print_info "$1" "$2"
 fi
