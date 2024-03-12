@@ -1,0 +1,42 @@
+Behind the Scenes: What Happens When You Enter a URL?
+
+Ever entered a site URL into your browser and wondered what happened next? It may appear to be magic, but a sophisticated sequence of activities occurs behind the scenes to bring that website content to your screen. Let's look at the journey from URL to webpage:
+
+
+Act 1: The DNS Lookup.
+
+The experience begins when you enter "https://www.google.com" and hit Enter. This seemingly simple action initiates a vital step: Domain Name System (DNS) lookup. Consider DNS to be the internet's equivalent of a large phone book. It transforms the user-friendly domain name ("www.google.com") into a numerical IP address (similar to a phone number) that computers can understand.
+
+Act 2: TCP/IP Handshake
+
+With the IP address, your computer initiates communication via the Transmission Control Protocol/Internet Protocol (TCP/IP). TCP/IP functions as a dependable postal service, ensuring that data packets are delivered in the proper order and without errors.
+
+Act 3: Firewall, The Gatekeeper
+
+Before arriving at its destination, the data stream meets a firewall. This security guard monitors incoming and outgoing traffic, identifying potential dangers and protecting your computer.
+
+Act 4: Encryption please! (HTTPS/SSL)
+
+Things are now getting more secure. When you see "https" at the front of a URL, it means the website employs HTTPS (Hypertext Transfer Protocol Secure). HTTPS uses Secure Sockets Layer (SSL) to encrypt communication between your browser and the web server. This encryption scrambles the data, rendering it unintelligible by anyone snooping on the network.
+
+Act 5: Load Balancing - Share the Workload
+
+Large websites frequently use load balancers. Consider a busy restaurant with one waiter. A load balancer functions like a maitre d', dividing incoming traffic evenly across numerous web servers to ensure smooth operation even during peak traffic periods.
+
+Act 6: Web Server—The Middleman
+
+The web server receives the request and retrieves the required files (HTML, CSS, and JavaScript) to create the webpage. It serves as an intermediate, retrieving content from the application server or database as necessary.
+
+Act 7: Application Server—The Powerhouse
+
+For dynamic websites, the web server may pass the baton to an application server. This server performs complex logic, connects with databases, and provides personalized content based on your request.
+
+Act 8: Database – The Treasure Trove
+
+Websites frequently rely on databases to store information. The application server may query the database (such as a product catalog) to retrieve the precise content you requested.
+
+Act 9: Rendering the Masterpiece
+
+Finally, all retrieved files are returned to your browser. Your browser analyzes the code, displays the webpage on your screen, and voilà! You see the familiar Google homepage.
+
+This is a simplified description, but it sheds light on the complex web of technology that work hard behind the scenes to provide your desired webpage securely and efficiently. The next time you explore the internet, consider the exciting journey your request takes to get you the information you seek!
