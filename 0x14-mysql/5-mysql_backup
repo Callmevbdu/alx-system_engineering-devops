@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Check if the password argument is provided
+if [ -z "$1" ]; then
+    echo "Please provide MySQL password."
+    exit 1
+fi
+
+# Define the current date for the backup file name
+backup_date=$(date +"%d-%m-%Y")
+
+# Perform MySQL dump with all databases
+mysqldump -u root -p"$1" --all-databases > backup.sql
+
+# Compress the MySQL dump into a tar.gz archive
+tar -czvf "$backup_date.tar.gz" backup.sql
+
+# Clean up the temporary backup file
+rm backup.sql
+
+echo "MySQL backup completed and stored as $backup_date.tar.gz"
