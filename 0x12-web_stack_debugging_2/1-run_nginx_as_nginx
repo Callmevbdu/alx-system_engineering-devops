@@ -4,5 +4,3 @@
 service nginx stop
 sed -i 's/user  nginx;/user  root;/' /etc/nginx/nginx.conf
 service nginx start
-pgrep -f nginx
-nc -z 0 8080
