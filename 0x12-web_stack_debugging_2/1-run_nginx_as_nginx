@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # a Bash script that configures the container to fit the requirements
 
-service nginx stop
-sed -i 's/user  nginx;/user  root;/' /etc/nginx/nginx.conf
-service nginx start
+chmod 644 /etc/nginx/nginx.conf
+sed -Ei 's/\s*#?\s*user .*/user nginx;/' /etc/nginx/nginx.conf
+sed -Ei 's/(listen (\[::\]:)?80) /\180 /' /etc/nginx/sites-enabled/default
+pkill apache2
+su nginx -s /bin/bash -c 'service nginx restart'
