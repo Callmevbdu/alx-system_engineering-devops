@@ -13,11 +13,11 @@ REST_API = "https://jsonplaceholder.typicode.com"
 
 
 def get_employee_todo_progress(employee_id):
-    req = requests.get(f'{REST_API}/users/{employee_id}').json()
-    task_req = requests.get(f'{REST_API}/todos').json()
+    req = requests.get('{}/users/{}'.format(REST_API, employee_id)).json()
+    task_req = requests.get('{}/todos'.format(REST_API)).json()
     empName = req.get('name')
-    tasks = [task for task in task_req if task.get('userId') == employee_id]
-    compTask = [task for task in tasks if task.get('completed')]
+    tasks = list(filter(lambda x: x.get('userId') == employee_id, task_req))
+    compTask = list(filter(lambda x: x.get('completed'), tasks))
 
     print(
         f'Employee {empName} is done with tasks({len(compTask)}/{len(tasks)}):'
