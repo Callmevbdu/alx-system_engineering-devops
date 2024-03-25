@@ -21,7 +21,7 @@ if __name__ == '__main__':
         userID = user.get('id')
         username = user.get('username')
         URL = 'https://jsonplaceholder.typicode.com/users/{}'.format(userID)
-        URL = URL + '/todos'
+        URL = URL + '/todos/'
         req = requests.get(URL)
         tasks = req.json()
         usersDict[userID] = []
@@ -30,9 +30,10 @@ if __name__ == '__main__':
         completed = task.get('completed')
         title_task = task.get('title')
         usersDict[userID].append({
-                                  "task": title_task,
-                                  "completed": completed,
-                                  "username": username})
+            "task": title_task,
+            "completed": completed,
+            "username": username
+        })
 
     with open('todo_all_employees.json', 'w') as f:
         json.dump(usersDict, f)
