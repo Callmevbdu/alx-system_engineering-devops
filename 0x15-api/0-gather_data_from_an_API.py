@@ -12,21 +12,25 @@ import sys
 REST_API = "https://jsonplaceholder.typicode.com"
 
 
-def get_employee_todo_progress(employee_id):
-    req = requests.get('{}/users/{}'.format(REST_API, employee_id)).json()
-    task_req = requests.get('{}/todos'.format(REST_API)).json()
-    empName = req.get('name')
-    tasks = list(filter(lambda x: x.get('userId') == employee_id, task_req))
-    compTask = list(filter(lambda x: x.get('completed'), tasks))
+def get_employee_todo_progress(emp_id):
+    user_response = requests.get(f'{REST_API}/users/{emp_id}').json()
+    todos_response = requests.get(f'{REST_API}/todos?userId={emp_id}').json()
 
-    print(
-        f'Employee {empName} is done with tasks({len(compTask)}/{len(tasks)}):'
-    )
-    for task in compTask:
-        print(f'\t{task.get("title")}')
+    if 'name' in user_response:
+        emp_name = user_response['name']
+        tasks = todos_response
+        ctasks = [task for task in tasks if task.get('completed')]
+
+        print(f'Employee {emp_name} is done with tasks ({len(ctasks)}/{len(tasks)}):')
+        for task in ctasks:
+            print(f'\t{task["title"]}')
+    else:
+        print("Employee not found.")
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1 and re.fullmatch(r'\d+', sys.argv[1]):
-        employee_id = int(sys.argv[1])
-        get_employee_todo_progress(employee_id)
+    if len(sys.argv) == 2 and re.match(r'\d+', sys.argv[1]):
+        emp_id = int(sys.argv[1])
+        get_employee_todo_progress(emp_id)
+    else:
+        print("Usage: python3 script_name.py <employee_id>")
