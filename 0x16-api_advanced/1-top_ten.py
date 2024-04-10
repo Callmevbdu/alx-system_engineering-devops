@@ -5,12 +5,11 @@
 import requests
 
 
-def top_ten(session, subreddit):
+def top_ten(subreddit):
     """
     Retrieves information about the top 10 hot posts from a subreddit on Reddit
     Prints the titles of those posts.
     Args:
-        session (requests.Session): Manages requests with a custom User-Agent.
         subreddit (str): Name of the subreddit to query.
     """
 
