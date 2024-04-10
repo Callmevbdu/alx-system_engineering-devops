@@ -9,11 +9,14 @@ import requests
 
 def number_of_subscribers(subreddit):
     """ main function """
-    if subreddit is None or not isinstance(subreddit, str):
-        return 0
     url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
-    res = requests.get(url, headers={'User-Agent': 'DreMukare'}).json()
-    subCount = 0
-    if 'error' not in res.keys():
-        subCount = res.get('data').get('subscribers')
+    headers = {'User-Agent': 'request'}
+    res = requests.get(url, headers=headers, allow_redirects=False)
+
+    if response.status_code != 200:
+        return 0
+
+    data = res.json().get("data")
+    subCount = data.get("subscribers")
+
     return subCount

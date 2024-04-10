@@ -23,4 +23,4 @@ A great API to use for some practice is the Reddit API. There’s a lot of endpo
 * All your files must be executable
 * The length of your files will be tested using wc
 * All your modules should have a documentation (python3 -c 'print(__import__("my_module").__doc__)')
-* You must use the Requests module for sending HTTP requests to the Reddit API
+* You must use the requests module for sending HTTP requests to the Reddit API
