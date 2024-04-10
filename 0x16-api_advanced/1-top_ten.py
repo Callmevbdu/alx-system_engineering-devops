@@ -3,6 +3,7 @@
 1-top_ten: Module with top_ten function
 """
 import requests
+import sys
 
 
 def top_ten(subreddit):
@@ -12,6 +13,14 @@ def top_ten(subreddit):
     Args:
         subreddit (str): Name of the subreddit to query.
     """
+    with Session() as session:
+        # Set a custom User-Agent to avoid "Too Many Requests" errors
+        session.headers.update({'User-Agent': 'My Reddit API Script v1.0'})
+
+        if len(sys.argv) < 2:
+            print("Please pass an argument for the subreddit to search.")
+        else:
+            subreddit = sys.argv[1]
 
     url = f"https://reddit.com/r/{subreddit}/hot.json?limit=10"
 
