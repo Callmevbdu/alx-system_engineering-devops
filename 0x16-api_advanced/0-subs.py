@@ -9,20 +9,25 @@ import requests
 
 def number_of_subscribers(subreddit):
     """ main function """
-    with Session() as session:
-        # Set a custom User-Agent to avoid "Too Many Requests" errors
-        session.headers.update({'User-Agent': 'My Reddit API Script v1.0'})
+    session = requests.Session()  # Create a session for User-Agent
+    session.headers.update({'User-Agent': 'My Reddit API Script v1.0'})
 
-        if len(sys.argv) < 2:
-            print("Please pass an argument for the subreddit to search.")
-        else:
-            subreddit = sys.argv[1]
+    url = f'https://www.reddit.com/r/{subreddit}/about.json'
+    try:
+        response = session.get(url, allow_redirects=False)
+        response.raise_for_status()  # Raise error for non-200 status codes
 
-    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
-    res = requests.get(url, headers=session.headers, allow_redirects=False)
-
-    if response.status_code == 404:
+        data = response.json().get("data")
+        return data.get("subscribers", 0)  # Default to 0 if key missing
+    except (requests.exceptions.RequestException, KeyError):
+        # Handle various request errors and missing subscriber data
         return 0
 
-    data = res.json().get("data")
-    return data.get("subscribers")
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Please pass an argument for the subreddit to search.")
+    else:
+        subreddit = sys.argv[1]
+        subscribers = number_of_subscribers(subreddit)
+        print(subscribers)
