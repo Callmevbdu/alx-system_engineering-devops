@@ -1,0 +1,12 @@
+# Config Nginx for route /airbnb-onpage/
+
+server {
+  listen 80;
+  server_name 54.221.13.125;
+
+  location /airbnb-dynamic/number_odd_or_even/ {
+    proxy_pass http://localhost:5001/number_odd_or_even/;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+  }
+}
