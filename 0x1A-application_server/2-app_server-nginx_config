@@ -1,4 +1,4 @@
-user  nginx;
+user nginx;
 worker_processes auto;
 
 error_log /var/log/nginx/error.log warn;
@@ -9,19 +9,28 @@ events {}
 http {
   # Include server specific configurations from conf.d directory
   include /etc/nginx/conf.d/*.conf;
-}
-  server {
-    # Listen on all interfaces (local and public IP) on port 80
-    listen 80;
 
-    # Serve requests to /airbnb-onepage/ location
-    location /airbnb-onepage/ {
-      # Proxy requests to the application server on port 5000
-      proxy_pass http://localhost:5000;
-      proxy_set_header Host $host;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_http_version 1.1;
-      proxy_buffering off;
-    }
-  }
+
+	server {
+		listen 80 default_server;
+		listen [::]:80 default_server;
+	
+		root /var/www/html;
+
+		# Add index.php to the list if you are using PHP
+		index index.html index.htm index.nginx-debian.html;
+
+		server_name _;
+
+		location / {
+			# First attempt to serve request as file, then
+			# as directory, then fall back to displaying a 404.
+			try_files $uri $uri/ =404;
+		}
+
+		# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+		location /airbnb-onepage/ {
+					proxy_pass http://0.0.0.0:5000/airbnb-onepage;
+		}
+	}
 }
