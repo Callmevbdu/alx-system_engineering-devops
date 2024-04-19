@@ -5,7 +5,6 @@ exec { 'increase_nginx_open_files' :
                   'NEW=ULIMIT="-n 15000"'],
   command     => 'sudo sed -i "s/$OLD/$NEW/" $DIR; sudo service nginx restart',
   user        => 'nginx',
-  unless      => 'ulimit -n | grep -q 15000',
   path        => ['/usr/bin', '/bin'],
   returns     => [0, 1]
 }
