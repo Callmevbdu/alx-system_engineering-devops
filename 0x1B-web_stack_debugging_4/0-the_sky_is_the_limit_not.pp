@@ -7,5 +7,5 @@ exec { 'increase_nginx_open_files' :
   user        => 'nginx',
   unless      => 'ulimit -n | grep -q 15000',
   path        => ['/usr/bin', '/bin'],
-  returns     => [0],
+  returns     => [0, 1]
 }
